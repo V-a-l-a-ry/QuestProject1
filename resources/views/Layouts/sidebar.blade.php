@@ -1,5 +1,4 @@
-<div class="w-80 h-screen bg-gray-800 flex flex-col">
-    <!-- Logo and Branding -->
+<div class="fixed w-80 h-screen bg-gray-800 flex flex-col z-20">
     <div class="p-4">
         <a class="flex items-center text-white mb-4 md:mb-0">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
@@ -11,7 +10,6 @@
         </a>
     </div>
 
-    <!-- Navigation Links -->
     <nav class="flex flex-col items-start text-base flex-grow p-5">
         <x-nav-link href="#" class="flex items-center text-white mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor"
@@ -22,12 +20,12 @@
             </svg>
             First Link
         </x-nav-link>
-        <x-nav-link href="#" class="flex items-center text-white mb-4">
+        <x-nav-link href="/about" class="flex items-center text-white mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor"
                 stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
-            Second Link
+            About Us
         </x-nav-link>
         <x-nav-link href="#" class="flex items-center text-white mb-4">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 mr-3 text-white" fill="none" stroke="currentColor"
@@ -45,7 +43,6 @@
         </x-nav-link>
     </nav>
 
-    <!-- Logout Button -->
     <div class="p-4 mt-auto">
         @auth
             <form method="POST" action="/logout">

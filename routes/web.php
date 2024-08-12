@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/about', function () {
+    return view('Pages.about');
+})->name('about');
+
+//authentication
 Route::get('/', [IndexController::class, 'index'])->name('home');
 
 Route::get('/register', [RegisterUserController::class, 'create'])->name('register');
@@ -25,3 +30,5 @@ Route::get('/login', [LoginUserController::class, 'create'])->name('login');
 Route::post('/login', [LoginUserController::class, 'store'])->name('login.store');
 
 Route::post('/logout', [LoginUserController::class, 'destroy'])->name('logout.destroy');
+
+
