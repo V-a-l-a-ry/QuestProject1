@@ -3,6 +3,19 @@
 @section('title', 'Home')
 
 @section('content')
+<div class="container">
+
+        <!-- Example of adding a button -->
+        @if(auth()->check())
+            <a href="{{ route('intern.dashboard') }}" class="btn btn-primary">Go to Dashboard</a>
+        @else
+            <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
+        @endif
+</div>
+<link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+<body style="margin: top; padding: 0; font-family: Arial, sans-serif; background-image: url('/images/backgrounds/quet.jpg'); background-size: cover; background-position: center;">
+
+
     <div class="flex">
         @include('Layouts.sidebar')
 
@@ -17,4 +30,4 @@
     </div>
 @endsection
 
-@section('heading', 'Welcome to the Home Page')
+<!--@section('heading', 'Welcome to the Home Page')-->

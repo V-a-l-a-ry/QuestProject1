@@ -20,6 +20,16 @@ class LoginUserController extends Controller
         }
         return redirect()->route('login')->with('error', 'Login details are not valid');
     }
+    // In app/Http/Controllers/Auth/LoginController.php
+protected function authenticated(Request $request, $user)
+{
+    if ($user->role === 'intern') {
+        return redirect()->route('intern.profile.edit', $user->id);
+    }
+
+    // Default redirect for other users
+    return redirect()->route('home');
+}
 
     public function destroy()
     {

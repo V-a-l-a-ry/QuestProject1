@@ -1,25 +1,37 @@
-<header class="fixed top-0 left-0 w-full h-16 bg-gray-200 border-b border-gray-200 z-10">
-    <div class="container-fluid mx-auto flex flex-wrap p-4 flex-col md:flex-row items-center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Laravel App</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-image: url('/images/backgrounds/quet1.jpg');">
 
-        @auth
-            <div class="relative flex items-center ml-auto group">
-                <img src="https://img.icons8.com/?size=100&id=98957&format=png&color=000000" alt="User Avatar"
-                    class="w-7 h-7 rounded-full mr-1">
-                <button class="capitalize focus:outline-none" id="user-menu-button">
-                    {{ Auth::user()->name }}
-                </button>
-                <div class="absolute right-0 mt-10 w-48 bg-white text-gray-800 rounded-md shadow-lg hidden group-hover:block"
-                    id="user-menu">
-                    <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Profile</a>
-                    <a href="#" class="block px-4 py-2 text-sm hover:bg-gray-100">Settings</a>
+            <!-- Centered Text --> 
+            <div style="text-align: center; color: white; padding-top: 20px;">
+        <h1 style="font-size: 2rem; font-weight: bold;font-size:50px;">Your App Name</h1>
+    </div> 
+    <nav style="background-color: blue; padding: 10px; margin: top;">
+        <ul style="list-style-type: none; padding: 0; margin: 0; display: flex; justify-content: flex-end;">
+            <li style="margin-left: 60px;"><a href="{{ route('home') }}"style="color: white; text-decoration: none; font-weight: bold;font-size:20px;">Home</a></li>
+            <li style="margin-left: 60px;"><a href="{{ route('about') }}"style="color: white; text-decoration: none; font-weight: bold;font-size:20px;">About</a></li>
+            <li style="margin-left: 60px;"><a href="{{ route('docs.index') }}"style="color: white; text-decoration: none; font-weight: bold;font-size:20px;">Documentation</a></li> <!-- Add this line -->
+            <li style="margin-left: 60px;">
+                
+                 
+                 <div style="display: none; position: absolute; background-color: white; color: black; border-radius: 5px; margin-top: 5px;">
+                    <a href="#" style="display: block; padding: 10px; text-decoration: none; color: black;font-size:20px;">Profile</a>
+                    <a href="#" style="display: block; padding: 10px; text-decoration: none; color: black;font-size:20px;">Settings</a>
                 </div>
+                </li>
+                </ul>
             </div>
-        @else
-            <div class="ml-auto">
-                <a href="{{ route('login') }}" class="text-gray-800 hover:text-gray-600">Login</a>
-                <a href="{{ route('register') }}" class="ml-4 text-gray-800 hover:text-gray-600">Register</a>
+            <div class="ml-auto"style="margin-left: 20px;" style="color: white; text-decoration: none; font-weight: bold;font-size:20px;">
+                <a href="{{ route('login') }}" class="text-white hover:text - blue">Login</a>
+                <a href="{{ route('register') }}" class="ml-4 text-white hover:text - blue">Register</a>
             </div>
-        @endauth
 
     </div>
-</header>
+    </nav>
+    
+

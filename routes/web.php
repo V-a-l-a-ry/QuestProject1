@@ -11,7 +11,9 @@ use App\Http\Controllers\Admin\GroupController ;
 use App\Http\Controllers\Intern\profileController;
 use App\Http\Controllers\Intern\SkillController;
 use App\Http\Controllers\Intern\InternFeedbackController;
-
+use App\Http\Controllers\Intern\TaskController;
+use App\Http\Controllers\Intern\GroupController as InternGroupController;
+use App\Http\Controllers\DocumentationController;
 
 
 /*
@@ -49,8 +51,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:intern'])->group(function () {
-    Route::get('/intern/dashboard', [InternDashboard::class, 'index'])->name('intern.dashboard');
-    Route::resource('/intern/profile', profileController::class);
-    Route::resource('/intern/skills', SkillController::class);
-    Route::get('/intern/feedback', [InternFeedbackController::class, 'index'])->name('intern.feedback');
+    Route::get('/intern/Dashboard', [InternDashboard::class, 'index'])->name('intern.dashboard');
+    Route::get('/intern/profile/edit/{id}', [profileController::class, 'edit'])->name('intern.profile.edit');
+    Route::get('/intrern/Skills', [SkillController::class,  'index'])->name('intern.skills');
+    Route::get('/intern/Feedback', [InternFeedbackController::class, 'index'])->name('intern.feedback');
+    Route::get('/intern/Tasks', [TaskController::class, 'index'])->name('intern.tasks');
+    Route::get('/intern/Group', [InternGroupController::class, 'index'])->name('intern.groups');
 });
+Route::get('/docs/{version?}', [DocumentationController::class, 'index'])->name('docs.index');
+

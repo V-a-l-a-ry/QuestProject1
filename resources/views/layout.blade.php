@@ -9,8 +9,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
+<div class="content">
     @yield('content')
-</body>
+    </div>
+    
 
 </html>
