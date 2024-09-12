@@ -2,11 +2,24 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import vue from '@vitejs/plugin-vue';
 
+
+
+
+
+
+
+
+
+
+
+
+
+// Define Vite configuration
 export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/sass/app.scss',
+                'resources/css/app.css', // Updated to use CSS file for Tailwind
                 'resources/js/app.js',
             ],
             refresh: true,

@@ -1,7 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
+
+
     <div class="flex flex-col h-full">
+  
         <main class="flex-grow flex container mx-auto px-6 md:px-12 py-8">
             <div>
                 <a class="px-4 py-3 bg-blue-500 text-white rounded" href="{{ url('/dashboard') }}"
@@ -32,5 +35,6 @@
                 &copy; Quest Intern Portal.
             </div>
         </footer>
+      
     </div>
 @endsection
