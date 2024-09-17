@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->datetime('due_date');
+            $table->date('due_date');
             $table->unsignedBigInteger('admin_id'); // Foreign key
             $table->timestamps();
 

@@ -1,7 +1,5 @@
 @extends('layouts.app')
-
 @section('content')
-
 
 
 <!DOCTYPE html>
@@ -13,7 +11,14 @@
   
 <!--   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"> -->
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 gap-4">
+
+@if (session('success'))
+    <div class="bg-green-400 text-white p-4 rounded mt-4 mb-4 max-w-md mx-auto">
+        {{ session('success') }}
+    </div>
+@endif
+
 
   <!-- Container -->
   <div class="container mx-auto p-4">
@@ -25,39 +30,50 @@
     </div>
 
     <!-- Groups List -->
-    <div class="bg-white shadow-md rounded-lg p-6">
-      <h2 class="text-xl font-semibold mb-4">Groups</h2>
-      <div class="divide-y divide-gray-200">
-        <!-- Example Group Item -->
-        <div class="py-4 flex justify-between items-center">
-          <div>
-            <h3 class="text-lg font-medium">Group 1</h3>
-            <p class="text-sm text-gray-600">5 Members</p>
-            <!-- Button to view group members -->
-            <button class="text-blue-500 hover:underline text-sm mt-2" onclick="openModal('viewMembersModal')">View Members</button>
-          </div>
-          <div class="flex space-x-2">
-            <!-- Button to assign a new task -->
-            <button onclick="openModal('assignTaskModal')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Assign New Task</button>
-            <!-- Button to add a new member -->
-            <button onclick="openModal('addMemberModal')" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Add Member</button>
-            <!-- Button to delete group -->
-            <button class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
-          </div>
+
+    @foreach($groups as $group)
+    <div class="bg-white mb-4 shadow-md rounded-lg p-6">
+        <h2 class="text-xl font-semibold mb-4">GROUP</h2>
+        <div class="divide-y  divide-gray-200">
+            <div class="py-4 flex justify-between items-center">
+                <div>
+                    <h3 class="text-lg font-medium">{{ $group->name }}</h3>
+                    <h3 class="text-lg font-medium">{{ $group->id }}</h3>
+                    <p class="text-sm text-gray-600">5 Members</p>
+                    <!-- Button to view group members -->
+                    <button class="text-blue-500 hover:underline text-sm mt-2" onclick="openModal('viewMembersModal')">View Members</button>
+                </div>
+                <div class="flex space-x-2">
+                    <!-- Button to assign a new task -->
+                    <button onclick="openModal('assignTaskModal', {{ $group->id }})" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Assign New Task</button>
+
+                    <!-- Button to add a new member -->
+                    <button onclick="openModal('addMemberModal', {{ $group->id }})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Add Member</button>
+
+                    <!-- Button to delete group -->
+<form action="{{ route('destroy', $group->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this group?');">
+    @csrf
+    @method('DELETE')
+    <button type="submit" class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">Delete</button>
+</form>
+
+                </div>
+            </div>
         </div>
-        <!-- Repeat similar block for each group -->
-      </div>
     </div>
+@endforeach
+
   </div>
+
 
   <!-- Modal for Creating New Group -->
   <div id="createGroupModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-1/2">
       <h2 class="text-xl font-semibold mb-4">Create New Group</h2>
      <form action="{{ route('create.group') }}" method="POST">
-        <!-- Group Name -->
-
+      
         @csrf
+   
         <div class="mb-4">
           <label for="groupName" class="block text-gray-700 font-medium">Group Name</label>
           <input type="text" name="groupname" id="groupName" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name">
@@ -72,21 +88,7 @@
           </select>
         </div> -->
 
-        <div class="mb-4">
-          <label for="task" class="block text-gray-700 font-medium">Task</label>
-          <input type="text" id="task" name="task" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name">
-        </div>
 
-
-        <div class="mb-4">
-          <label for="description" class="block text-gray-700 font-medium">Task-Description</label>
-          <textarea id="description" name="description" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name" ></textarea>
-        </div>
-
-        <div class="mb-4">
-          <label for="date" class="block text-gray-700 font-medium">Due date</label>
-          <input type="datetime-local" name="date" id="date" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name">
-        </div>
 
 
         <!-- Buttons -->
@@ -102,12 +104,37 @@
   <div id="assignTaskModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-1/2">
       <h2 class="text-xl font-semibold mb-4">Assign Task to Group</h2>
-      <form>
+
+
+
+
+
+  <form action="{{ route('assign.task') }}" method="POST">
         <!-- Task Description -->
-        <div class="mb-4">
-          <label for="taskDescription" class="block text-gray-700 font-medium">Task Description</label>
-          <textarea id="taskDescription" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" rows="4" placeholder="Enter task description"></textarea>
+        @csrf
+
+      <div class="mb-4">
+        <label for="group_id" class="block text-gray-700 font-medium">Group ID</label>
+        <input type="text" id="group_id" name="group_id" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="" readonly>
+      </div>
+
+      <div class="mb-4">
+          <label for="task" class="block text-gray-700 font-medium">Task</label>
+          <input type="text" id="task" name="task" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name">
         </div>
+
+
+        <div class="mb-4">
+          <label for="description" class="block text-gray-700 font-medium">Task-Description</label>
+          <textarea id="description" name="description" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name" ></textarea>
+        </div>
+
+        <div class="mb-4">
+          <label for="date" class="block text-gray-700 font-medium">Due date</label>
+          <input type="date" name="date" id="date" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter group name">
+        </div>
+
+        
         <!-- Buttons -->
         <div class="flex justify-end">
           <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600" onclick="closeModal('assignTaskModal')">Cancel</button>
@@ -117,31 +144,55 @@
     </div>
   </div>
 
+
+
+
+
+
+
   <!-- Modal for Adding New Member -->
   <div id="addMemberModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center">
     <div class="bg-white rounded-lg p-6 w-1/2">
       <h2 class="text-xl font-semibold mb-4">Add New Member</h2>
-      <form>
-        <!-- Member Name -->
-        <div class="mb-4">
-          <label for="memberName" class="block text-gray-700 font-medium">Member Name</label>
-          <input type="text" id="memberName" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="Enter member name">
-        </div>
-        <!-- Assign Role -->
-        <div class="mb-4">
-          <label for="memberRole" class="block text-gray-700 font-medium">Assign Role</label>
-          <select id="memberRole" class="w-full border border-gray-300 rounded px-3 py-2 mt-1">
-            <option>Leader</option>
-            <option>Member</option>
-            <option>Observer</option>
-          </select>
-        </div>
-        <!-- Buttons -->
-        <div class="flex justify-end">
-          <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600" onclick="closeModal('addMemberModal')">Cancel</button>
-          <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Member</button>
-        </div>
-      </form>
+
+
+
+
+      <form action="{{ route('add.Togroup') }}" method="POST">
+    @csrf
+    
+    <!-- Group ID -->
+    <div class="mb-4">
+        <label for="group_id2" class="block text-gray-700 font-medium">Group ID</label>
+        <input type="text" id="group_id2" name="group_id2" class="w-full border border-gray-300 rounded px-3 py-2 mt-1" placeholder="" readonly>
+    </div>
+
+    <!-- Select Member Name -->
+    <div class="mb-4">
+        <label for="intern_id" class="block text-gray-700 font-medium">Select Member Name</label>
+        <select id="intern_id" name="intern_id" class="w-full mb-16 border border-gray-300 rounded px-3 py-2 mt-1">
+            @foreach($newIntern as $newInterns)
+                <option value="{{ $newInterns->id }}">{{ $newInterns->name }}</option>
+            @endforeach
+        </select>
+    </div>
+
+    <!-- Intern ID (hidden or readonly) -->
+ 
+    <!-- Buttons -->
+    <div class="flex justify-end">
+        <button type="button" class="bg-gray-500 text-white px-4 py-2 rounded mr-2 hover:bg-gray-600" onclick="closeModal('addMemberModal')">Cancel</button>
+        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Add Member</button>
+    </div>
+</form>
+
+
+
+
+
+
+
+
     </div>
   </div>
 
@@ -169,10 +220,32 @@
 
   <!-- JavaScript for Modal Functionality -->
   <script>
-    function openModal(modalId) {
-      document.getElementById(modalId).classList.remove('hidden');
+    function openModal(modalId, groupId) {
+    document.getElementById(modalId).classList.remove('hidden');
+
+    // targets the input field with the static ID
+
+    const groupInputField2 = document.getElementById('group_id2');
+    const groupInputField = document.getElementById('group_id');
+
+
+    if (groupInputField) {
+      groupInputField.value = groupId; // Set the value to the passed groupId
     }
 
+    if (groupInputField2) {
+      groupInputField2.value = groupId; // Set the value to the passed groupId
+    }
+ 
+ 
+
+
+
+
+
+  }
+
+    
     function closeModal(modalId) {
       document.getElementById(modalId).classList.add('hidden');
     }

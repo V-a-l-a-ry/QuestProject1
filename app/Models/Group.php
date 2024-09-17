@@ -12,10 +12,8 @@ class Group extends Model
     use HasFactory;
 
     
-    protected $fillable = [
-        'name',
-        'admin_id',
-        'task-id',
-    ];
+    protected $fillable = ['name', 'admin_id' ,'task_id'];
+
+   
 
 }

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Model\User;
+use App\Model\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -12,7 +14,8 @@ class Task extends Model
     protected $fillable = [
         'title',
         'description',
-        'due-date',
+        'due_date',
+        'group_id',
         'admin_id',
     ];
 }
