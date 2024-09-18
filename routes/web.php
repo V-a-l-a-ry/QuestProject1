@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InternController;
+
 use Illuminate\Support\Facades\Gate;
 use App\Http\Controllers\GroupController;
+use App\Http\Controllers\internAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,7 +31,7 @@ Auth::routes();
 
 
 
-Route::middleware('can:admin')->group(function () {
+//Route::middleware('can:admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashController::class, 'index'])->name('dashboard')->middleware('auth');
 
     Route::get('Group/index', [App\Http\Controllers\GroupController::class, 'index'])->middleware('auth')->name('group.index');
@@ -54,7 +55,7 @@ Route::middleware('can:admin')->group(function () {
     
     Route::post('/groups', [App\Http\Controllers\GroupController::class, 'store'])->middleware('auth')->name('create.groupName');
     */
-});
+//});
 
 
 
@@ -70,5 +71,40 @@ Route::post('/profile', [ProfileController::class, 'update'])->middleware('auth'
 
 
 
-Route::get('/internDashboard', [InternController::class, 'index'])->name('internDashboard');
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//INTERN ROUTES
+Route::get('internAuth/register', [internAuthController::class, 'create'])->name('register.create'); // Show the registration form
+Route::post('internAuth/register', [internAuthController::class, 'store'])->name('register.store'); // Handle the form submission
+Route::get('internAuth/login', [internAuthController::class, 'showLoginForm'])->name('login');
+Route::post('internAuth/login', [internAuthController::class, 'login'])->name('login.store');
+Route::post('internAuth/logout', [internAuthController::class, 'logout'])->name('logout');
+
+
+
+
+Route::get('intern/dashboard', [internAuthController::class, 'index'])->name('intern.internDashboard');

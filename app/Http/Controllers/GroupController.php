@@ -17,7 +17,11 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::all();
-      
+        $groupss = DB::table('users')
+        ->join('intern_groups', 'users.id', '=', 'intern_groups.intern_id')
+        ->join('groups', 'intern_groups.group_id', '=', 'groups.id') // Join the groups table
+        ->select('users.name as username', 'groups.name as groupname') // Select user name and group name
+        ->get();
 
         $newIntern = DB::table('users')
         ->leftJoin('intern_groups', 'users.id', '=', 'intern_groups.intern_id')
