@@ -12,7 +12,7 @@
 
                 <!-- Links -->
                 <div class="hidden sm:-my-px sm:ml-6 sm:flex sm:space-x-8">
-                    <a href="/" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                    <a href="/intern/dashboard" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
                     <a href="/about" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Notification</a>
                     <a href="/contact" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Contact</a>
                 </div>
@@ -21,11 +21,11 @@
             <!-- Right Side -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
                 @guest
-                    <a href="{{ route('login') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
+                    <a href="{{ route('intern.login') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Login</a>
                     <a href="{{ route('register.create') }}" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Register</a>
                 @else
                     <a href="#" class=" sm:hidden  w-max py-4 text-black hover:text-gray-700 px-3  rounded-md text-sm font-medium">{{ Auth::user()->fullName }}</a>
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
+                    <form action="{{ route('internLogout') }}" method="POST" class="inline">
                         @csrf
                         <button type="submit" class="text-gray-500 hover:text-gray-700 px-3 py-2 rounded-md text-sm font-medium">Logout</button>
                     </form>

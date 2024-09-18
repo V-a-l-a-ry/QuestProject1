@@ -21,17 +21,17 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
+
+
+
+
+
+// Admin Auth
 Auth::routes();
-
-
-
-
-
-
-
-
-
-//Route::middleware('can:admin')->group(function () {
+Route::middleware('can:admin')->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\DashController::class, 'index'])->name('dashboard')->middleware('auth');
 
     Route::get('Group/index', [App\Http\Controllers\GroupController::class, 'index'])->middleware('auth')->name('group.index');
@@ -41,11 +41,8 @@ Auth::routes();
     Route::post('/assign', [App\Http\Controllers\GroupController::class, 'assignTask'])->middleware('auth')->name('assign.task');
 
 
-    // For web routes
+
     Route::delete('/groups/{id}', [App\Http\Controllers\GroupController::class, 'destroy'])->middleware('auth')->name('destroy');
-
-
-
     Route::post('/group/add', [App\Http\Controllers\GroupController::class, 'addnewIntern'])->middleware('auth')->name('add.Togroup');
 
 
@@ -55,7 +52,7 @@ Auth::routes();
     
     Route::post('/groups', [App\Http\Controllers\GroupController::class, 'store'])->middleware('auth')->name('create.groupName');
     */
-//});
+});
 
 
 
@@ -96,15 +93,15 @@ Route::post('/profile', [ProfileController::class, 'update'])->middleware('auth'
 
 
 
+//INTERN AUTH
+Route::get('internAuth/internLogin', [internAuthController::class, 'showLoginForm'])->name('intern.login');
+Route::get('internAuth/internRegister', [internAuthController::class, 'create'])->name('register.create');
 
-//INTERN ROUTES
-Route::get('internAuth/register', [internAuthController::class, 'create'])->name('register.create'); // Show the registration form
-Route::post('internAuth/register', [internAuthController::class, 'store'])->name('register.store'); // Handle the form submission
-Route::get('internAuth/login', [internAuthController::class, 'showLoginForm'])->name('login');
-Route::post('internAuth/login', [internAuthController::class, 'login'])->name('login.store');
-Route::post('internAuth/logout', [internAuthController::class, 'logout'])->name('logout');
-
-
+Route::post('internAuth/internRegister', [internAuthController::class, 'store'])->name('internRegister.store'); // Handle the form submission
+Route::post('internAuth/internLogin', [internAuthController::class, 'internLogin'])->name('internLogin.store');
+Route::post('internAuth/internLogout', [internAuthController::class, 'logout'])->name('internLogout');
 
 
+Route::middleware('can:intern')->group(function () {
 Route::get('intern/dashboard', [internAuthController::class, 'index'])->name('intern.internDashboard');
+});

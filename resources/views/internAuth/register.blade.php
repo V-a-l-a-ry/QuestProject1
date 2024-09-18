@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <form action="{{ route('register.store') }}" method="POST">
+    <form action="{{ route('internRegister.store') }}" method="POST">
         @csrf
 
         <!-- Full Name -->

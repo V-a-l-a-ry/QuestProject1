@@ -102,7 +102,7 @@ class internAuthController extends Controller
          return view('internAuth.login');
      }
  
-     public function login(Request $request)
+     public function internLogin(Request $request)
      {
        
          $request->merge([

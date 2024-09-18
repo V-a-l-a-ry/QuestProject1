@@ -30,5 +30,12 @@ class AuthServiceProvider extends ServiceProvider
                 return $user->isAdmin();
 
         });
-    }
+
+
+        Gate::define('intern', function(User $user) {
+
+            return $user->isIntern();
+
+    });
+  }
 }
